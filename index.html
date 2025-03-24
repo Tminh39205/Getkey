@@ -58,6 +58,70 @@
             position: absolute;
             top: -10px;
             color: white;
+            startSnowfall();
+            document.body.addEventListener('click', function() {
+                let music = document.getElementById("background-music");
+                if (music.paused) { music.play(); }
+            })<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận Key Miễn Phí - Mùa Đông ❄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #121212; color: white; text-align: center; overflow: hidden; flex-direction: column; }
+        .container { background: #1E1E1E; padding: 30px; border-radius: 15px; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); width: 380px; position: relative; z-index: 1; }
+        h2, h3 { margin-bottom: 15px; font-weight: 600; }
+
+        /* Nút bấm chung */
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        button:hover { transform: scale(1.08); }
+
+        /* Nút Telegram */
+        .btn-telegram {
+            background: linear-gradient(45deg, #0088cc, #005f99);
+            color: white;
+            box-shadow: 0px 5px 15px rgba(0, 136, 204, 0.5);
+        }
+        .btn-telegram:hover { box-shadow: 0px 8px 20px rgba(0, 136, 204, 0.8); }
+
+        /* Icon Telegram */
+        .btn-telegram img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Nút Nhận Key (Màu Hồng Sáng) */
+        .btn-key {
+            background: linear-gradient(45deg, #ff99cc, #ff66b2);
+            color: white;
+            box-shadow: 0px 5px 15px rgba(255, 102, 178, 0.5);
+        }
+        .btn-key:hover { box-shadow: 0px 8px 20px rgba(255, 102, 178, 0.8); }
+
+        /* Hiệu ứng tuyết rơi */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
             font-size: 14px;
             opacity: 0.8;
             user-select: none;
@@ -66,6 +130,13 @@
         @keyframes fall {
             0% { transform: translateY(-10px); opacity: 1; }
             100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Tối ưu giao diện cho mobile */
+        @media (max-width: 600px) {
+            .container { width: 90%; }
+            h2, h3 { font-size: 1.2em; }
+            button { font-size: 14px; }
         }
     </style>
 </head>
@@ -109,6 +180,7 @@
                 document.getElementById("key-box").innerText = "Key của bạn: " + newKey;
                 document.getElementById("key-box").style.display = "block";
                 loadKeyList();
+                copyKeyToClipboard(newKey);
             }
         }
 
@@ -122,6 +194,14 @@
                 div.className = "key-item";
                 div.innerText = `${k.key} (Nhận ngày: ${k.date})`;
                 keyListDiv.appendChild(div);
+            });
+        }
+
+        function copyKeyToClipboard(key) {
+            navigator.clipboard.writeText(key).then(() => {
+                alert("Key đã được sao chép vào clipboard!");
+            }).catch(err => {
+                console.error('Không thể sao chép key: ', err);
             });
         }
 
